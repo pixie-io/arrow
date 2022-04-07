@@ -69,6 +69,9 @@ class NumericBuilder : public ArrayBuilder {
           ARROW_MEMORY_POOL_DEFAULT)
       : ArrayBuilder(TypeTraits<T1>::type_singleton(), pool) {}
 
+  NumericBuilder(const std::shared_ptr<DataType>& type, MemoryPool* pool)
+      : ArrayBuilder(type, pool) {}
+
   /// Append a single scalar and increase the size if necessary.
   Status Append(const value_type val) {
     ARROW_RETURN_NOT_OK(ArrayBuilder::Reserve(1));
@@ -261,11 +264,17 @@ using Int16Builder = NumericBuilder<Int16Type>;
 using Int32Builder = NumericBuilder<Int32Type>;
 using Int64Builder = NumericBuilder<Int64Type>;
 
-using Time64Builder = NumericBuilder<Time64Type>;
-
 using HalfFloatBuilder = NumericBuilder<HalfFloatType>;
 using FloatBuilder = NumericBuilder<FloatType>;
 using DoubleBuilder = NumericBuilder<DoubleType>;
+
+using Date32Builder = NumericBuilder<Date32Type>;
+using Date64Builder = NumericBuilder<Date64Type>;
+using Time32Builder = NumericBuilder<Time32Type>;
+using Time64Builder = NumericBuilder<Time64Type>;
+using TimestampBuilder = NumericBuilder<TimestampType>;
+using MonthIntervalBuilder = NumericBuilder<MonthIntervalType>;
+using DurationBuilder = NumericBuilder<DurationType>;
 
 class ARROW_EXPORT BooleanBuilder : public ArrayBuilder {
  public:
